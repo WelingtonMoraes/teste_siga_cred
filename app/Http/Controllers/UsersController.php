@@ -22,6 +22,9 @@ class UsersController extends Controller
             $request->validate([
                 'login' => ['required','email'],
                 'password' => ['required','string']
+            ],[
+                'email.required'  => 'O Email é obrigatorio',
+                'password.required'  => 'A senha é obrigatoria'
             ]);
 
             $user = Users::query()->where('email', $request->login)->first();
@@ -32,13 +35,10 @@ class UsersController extends Controller
             }
             Auth::login($user);
 
-            return response()->json(array("status"=>true));
+            return response()->view('pages.dashboard');
 
         }catch (ValidationException $exception){
-            return response()->json(array_merge([
-                'status' => 'error',
-                'message' => $exception->getMessage()
-            ], ['errors'=>$exception->errors()]), $exception->status);
+            return redirect()->back()->with('danger','Email ou senha inválidos');
         }
     }
 }

@@ -1,3 +1,8 @@
+## iniciar projeto 
+- docker-compose up -d //inicia o docker com o banco de dados
+- php artisan mirgate
+- php artisan serve 
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
