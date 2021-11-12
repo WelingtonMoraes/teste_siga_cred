@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    command: --innodb-use-native-aio=0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - network-app
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - network-app
+
+networks:
+  network-app:
+    driver: bridge
